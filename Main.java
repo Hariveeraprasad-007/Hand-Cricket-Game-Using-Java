@@ -36,5 +36,31 @@ public class Main{
             player_batting_first=random.nextboolean();
             System.out.println("Your Oppent choosed "+(player_batting_first?"bowl":"bat")+" first");
         }
+        System.out.println("Could you please choose the level,1.Easy 2.Medium 3.Hard");
+        int difflevel=scanner.nextInt();
+        diffculty=switch(difflevel){
+            case 1->"easy";
+            case 2->"medium";
+            case 3->"hard";
+            default->"medium";
+        };
+        int userscore,computerscore;
+        if(player_batting_first){
+            userscore=PlayBattingInnings(true,diffculty);
+            computerscore=PlayBattingInnings(false,diffculty,userscore);
+        }
+        else{
+            computerscore=PlayBattingInnings(true,diffculty);
+            userscore=PlayBattingInnings(false,diffculty,computerscore);
+        }
+        if(userscore>computerscore){
+            System.out.println("Great match had happend, "+" had played well and win the match");
+        }
+        else if(computerscore>userscore){
+            System.out.println("Oppontent have won the match,great play by them");
+        }
+        else{
+            System.out.println("The intense match cames to end ,Match is draw , both players played well.");
+        }
     }
 }
