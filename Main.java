@@ -25,7 +25,7 @@ public class Main{
         int user_num=getvaildnumber();
         int computer_num=random.nextInt(10)+1;
         int total=user_num+computer_num;
-        boolean toss_result=(choice.equals("odd")&& total%2!=0)|(choice.equals("even")&&(total%2==0))
+        boolean toss_result=(choice.equals("odd")&& total%2!=0)|(choice.equals("even")&&(total%2==0));
         if(toss_result){
             System.out.println(name+" You have won toss,what could like to do? would bat first or bowl first(bat or bowl)");
             String user_choice=scanner.next().to_LowerCase();
@@ -62,5 +62,46 @@ public class Main{
         else{
             System.out.println("The intense match cames to end ,Match is draw , both players played well.");
         }
+    }
+    public static int PlayBattingInnings(boolean isplayerbatting,String diffculty){
+        return PlayBattingInnings(isplayerbatting,diffculty,Integer.MAX_VALUE);
+    }
+    public static int PlayBattingInnings(boolean isplayerbatting,String diffculty,int tareget){
+        int score=0;
+        playhistory.clear();
+        System.out.prinln("-==- "+(isplayerbatting?"Your":"opponent's")+" innings -==-");
+        while(true){
+            int batsmanchoice,bowlerchoice;
+            if(isplayerbatting){
+                System.out.prinln("Enter a vaild number(1-10): ");
+                batsmanchoice=getvaildnumber();
+                playhistory.add(batsmanchoice);
+                bowlerchoice=getComputerchoice(playhistory,diffculty);
+                System.out.println("Computer bowled "+bowlerchoice);
+            }
+            else{
+                batsmanchoice=random.nextInt(10)+1;
+                bowlerchoice=getvaildnumber()
+                System.out.println("Computer choice: "+batsmanchoice);
+                System.out.prinln("You bowled: "+bowlerchoice);
+            }
+            if(batsmanchoice==bowlerchoice){
+                if(isplayerbatting){
+                    System.out.println("Your Out");
+                }
+                else{
+                    System.out.prinln("Opponent Out");
+                }
+                break;
+            }
+            else{
+                score+=batsmanchoice;
+                System.out.prinln("Runs score "+batsmanchoice+"Total Runs: "+score);
+            }
+            if(score>target){
+                break;
+            }
+        }
+        return score;
     }
 }
