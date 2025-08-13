@@ -104,4 +104,16 @@ public class Main{
         }
         return score;
     }
+    public static int getvaildnumber(){
+        int n;
+        while(true){
+            n=scanner.nextInt();
+            if(n>0&&n<=10){
+                return n;
+            }
+            else{
+                System.out.println("Please enter a vaild number between 1 to 10");
+            }
+        }
+    }
 }
