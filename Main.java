@@ -48,8 +48,8 @@ public class Main{
         int computer_score;
         if(user_batting_first){
             System.out.println("User Batting firsr:")
-            user_score=PlayerBatting(diffculty);
-            computer_score=PlayerBatting(diffculty);
+            user_score=FirstBatting(diffculty,"user");
+            computer_score=SecondBatting(diffculty,"computer");
             if(computer_score>user_score){
                 System.out.println("Computer has won the match , computer chased the users targer");
             }
@@ -62,8 +62,8 @@ public class Main{
         }
         else(computer_batting_first){
             System.out.println("Computer batting first: ");
-            computer_score=PlayerBatting(diffculty);
-            user_score=PlayerBatting(diffculty);
+            computer_score=FirstBatting(diffculty,"computer");
+            user_score=SecondBatting(diffculty,"user");
             if(computer_score>user_score){
                 System.out.println("Computer has won the match , computer chased the users targer");
             }
@@ -75,5 +75,39 @@ public class Main{
             }
         }
     }
-
+    public static int FirstBatting(String diffculty,String batter){
+        int current_score=0;
+        if(batter.equals("user")){
+            System.out.println("**** User is batting *****");
+            System.out.println("Enter a vaild number in range of 1 to 10");
+            While(true){
+                int userchoice=sc.nextInt();
+                int computerchoice=Computer_Response(diffculty);
+                System.out.println("Score= "+current_score);
+                if(user_choice!=computer_choice){
+                    current_score+=user_choice;
+                }
+                else{
+                    System.out.println("User you are out at score of "+current_score);
+                    return current_score;
+                }
+            }
+        }
+        else{
+            System.out.println("**** Computer is batting ***");
+            System.out.println("Enter a vaild number in range of 1 to 10");
+            while(true){
+                int computerchoice=Computer_Response(diffculty);
+                int userchoice=sc.nextInt();
+                System.out.println("Score= "+current_score);
+                if(user_choice!=computer_choice){
+                    current_score+=computerchoice;
+                }
+                else{
+                    System.out.println("User you are out at score of "+current_score);
+                    return current_score;
+                }
+            }
+        }
+    }
 }
