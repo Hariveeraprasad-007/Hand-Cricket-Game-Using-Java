@@ -82,7 +82,8 @@ public class Main{
             System.out.println("Enter a vaild number in range of 1 to 10");
             While(true){
                 int userchoice=sc.nextInt();
-                int computerchoice=Computer_Response(diffculty);
+                playhistory.add(userchoice);
+                int computerchoice=Computer_Response(diffculty,playhistory);
                 System.out.println("Score= "+current_score);
                 if(user_choice!=computer_choice){
                     current_score+=user_choice;
@@ -97,8 +98,9 @@ public class Main{
             System.out.println("**** Computer is batting ***");
             System.out.println("Enter a vaild number in range of 1 to 10");
             while(true){
-                int computerchoice=Computer_Response(diffculty);
+                int computerchoice=Computer_Response(diffculty,playhistory);
                 int userchoice=sc.nextInt();
+                playhistory.add(userchoice);
                 System.out.println("Score= "+current_score);
                 if(user_choice!=computer_choice){
                     current_score+=computerchoice;
@@ -108,6 +110,72 @@ public class Main{
                     return current_score;
                 }
             }
+        }
+    }
+    public static int SecondBatting(String diffculty,String secondbatting,int target){
+        int cuurent_score=0;
+        if(secondbatting.equals("user")){
+            System.out.println("**** User is batting *****");
+            System.out.println("Enter a vaild number in range of 1 to 10");
+            while(current_score<=target){
+                int userchoice=sc.nextInt();
+                playhistory.add(userchoice);
+                int computerchoice=Computer_Response(diffculty,playhistory);
+                System.out.println("Score= "+current_score);
+                if(user_choice!=computer_choice){
+                    current_score+=user_choice;
+                }
+                else{
+                    System.out.println("User you are out at score of "+current_score);
+                    return current_score;
+                }
+            }
+        }
+        else{
+            System.out.println("**** Computer is batting ***");
+            System.out.println("Enter a vaild number in range of 1 to 10");
+            while(current_score<=target){
+                int computerchoice=Computer_Response(diffculty,playhistory);
+                int userchoice=sc.nextInt();
+                playhistory.add(userchoice);
+                System.out.println("Score= "+current_score);
+                if(user_choice!=computer_choice){
+                    current_score+=computerchoice;
+                }
+                else{
+                    System.out.println("User you are out at score of "+current_score);
+                    return current_score;
+                }
+            }
+        }
+    }
+    public static int Computer_Response(String diffculty,List<Integer> playhistory){
+        if(diffculty.equals("easy")){
+            return random.nextInt(10)+1;
+        }
+        else if(diffculty.equals("medium")){
+            if (random.nextInt(100) < 100 && !history.isEmpty()) {
+                    return history.get(history.size() - 1);
+                }
+        }
+        else if(diffculty.equals("hard")){
+            if (!history.isEmpty()) {
+                    Map<Integer, Integer> freq = new HashMap<>();
+                    for (int n : history) {
+                        freq.put(n, freq.getOrDefault(n, 0) + 1);
+                    }
+                    int predicted = history.get(0), max_val = 0;
+                    for (Map.Entry<Integer, Integer> entry : freq.entrySet()) {
+                        if (entry.getValue() > max_val) {
+                            max_val = entry.getValue();
+                            predicted = entry.getKey();
+                        }
+                    }
+                    return predicted;
+                }
+                return random.nextInt(10) + 1;
+            default:
+                return random.nextInt(10) + 1;
         }
     }
 }
