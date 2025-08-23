@@ -1,149 +1,79 @@
 import java.util.*;
 public class Main{
-    static Scanner scanner=new Scanner(System.in);
-    static Random random=new Random();
+    static Scanner sc=new Scanner(System.in);
+    static Random random=new Random<>();
     static List<Integer> playhistory=new ArrayList<>();
-    public static void main(String[] args){
-        System.out.println("Enter your name please: ");
-        String name=scanner.next();
-        System.out.println("Welcome to Hand Cricket Game ,"+name);
+    public static void main(Strings[] args){
+        System.out.println("Please Enter your name: ");
+        String name=sc.next();
         boolean playagain;
         do{
             playmatch();
-            System.out.println("Do you want to play again y/n");
-            playagain=scanner.next().equalsIgnoreCase("y");
-        }while(playagain);
-        System.out.println("Thanks for playing "+name);
+            System.out.println("Do you want play again(y/n): ");
+            playagain=sc.next().equalsIgnoreCase("y");
+        }
+        while(playagain);
     }
     public static void playmatch(){
-        String toss_choice;
-        String diffculty;
-        boolean player_batting_first;
-        System.out.println("**** TOSS TIME ****");
-        System.out.println("Choose odd or even");
-        String choice=scanner.next().toLowerCase();
-        System.out.println("Enter a number in between 1-10");
-        int user_num=getvaildnumber();
-        int computer_num=random.nextInt(10)+1;
-        int total=user_num+computer_num;
-        boolean toss_result=(choice.equals("odd")&& total%2!=0)|(choice.equals("even")&&(total%2==0));
-        if(toss_result){
-            System.out.println("You have won toss,what could like to do? would bat first or bowl first(bat or bowl)");
-            String user_choice=scanner.next().toLowerCase();
-            player_batting_first=user_choice.equals("bat");
-        }
-        else{
-            System.out.println("Your Oppent won the toss");
-            player_batting_first=random.nextBoolean();
-            System.out.println("Your Oppent choosed that you "+(player_batting_first?"bowl":"bat")+" first");
-        }
-        System.out.println("Could you please choose the level,1.Easy 2.Medium 3.Hard");
-        int difflevel=scanner.nextInt();
-        diffculty=switch(difflevel){
-            case 1->"easy";
-            case 2->"medium";
-            case 3->"hard";
-            default->"medium";
-        };
-        int userscore,computerscore;
-        if(player_batting_first){
-            userscore=PlayBattingInnings(true,diffculty);
-            computerscore=PlayBattingInnings(false,diffculty,userscore);
-        }
-        else{
-            computerscore=PlayBattingInnings(true,diffculty);
-            userscore=PlayBattingInnings(false,diffculty,computerscore);
-        }
-        if(userscore>computerscore){
-            System.out.println("Great match had happend, "+" had played well and win the match");
-        }
-        else if(computerscore>userscore){
-            System.out.println("Oppontent have won the match,great play by them");
-        }
-        else{
-            System.out.println("The intense match cames to end ,Match is draw , both players played well.");
-        }
-    }
-    public static int PlayBattingInnings(boolean isplayerbatting,String diffculty){
-        return PlayBattingInnings(isplayerbatting,diffculty,Integer.MAX_VALUE);
-    }
-    public static int PlayBattingInnings(boolean isplayerbatting,String diffculty,int target){
-        int score=0;
-        playhistory.clear();
-        System.out.println("-==- "+(isplayerbatting?"Your":"opponent's")+" innings -==-");
-        while(true){
-            int batsmanchoice,bowlerchoice;
-            if(isplayerbatting){
-                System.out.println("Enter a vaild number(1-10): ");
-                batsmanchoice=getvaildnumber();
-                playhistory.add(batsmanchoice);
-                bowlerchoice=getComputerchoice(playhistory,diffculty);
-                System.out.println("Computer bowled "+bowlerchoice);
-            }
-            else{
-                batsmanchoice=random.nextInt(10)+1;
-                bowlerchoice=getvaildnumber();
-                System.out.println("Computer choice: "+batsmanchoice);
-                System.out.println("You bowled: "+bowlerchoice);
-            }
-            if(batsmanchoice==bowlerchoice){
-                if(isplayerbatting){
-                    System.out.println("Your Out");
+        System.out.println("Chosse odd or even: ");
+        String user_odd_even_choice=sc.next();
+        System.out.println("Please enter a vaild number in between 1-10: ");
+        int user_toss_choice=sc.nextInt();
+        int computerchoice=random.nextInt(10)+1;
+        boolean user_batting_first
+        boolean computerbattingfirst;
+        int toss_total=user_toss_choice+computerchoice;
+        if((toss_total%2==0 && user_odd_even_choice=="even")||(toss_total%2!=0&user_odd_even_choice="odd")){
+                System.out.println("You have won the toss , what could you do first (Bat/Bowl): ");
+                user_batting_first=sc.next().equalsIgnoreCase("Bat");
+                if(user_batting_first){
+                    System.out.println("User won the toss and choosed to bat first");
                 }
                 else{
-                    System.out.println("Opponent Out");
+                    System.out.println("User won the toss and chossed to bowl first");
                 }
-                break;
+        }
+        else{
+            computerbattingfirst=random.nextBoolean();
+            if(computerbattingfirst){
+                System.out.println("Computer won the toss and choosed to bat first");
             }
             else{
-                score+=batsmanchoice;
-                System.out.println("Runs score "+batsmanchoice+" Total Runs: "+score);
-            }
-            if(score>target){
-                break;
+                System.out.println("Computer won the toss and choosed to bowl first");
             }
         }
-        return score;
-    }
-    public static int getvaildnumber(){
-        int n;
-        while(true){
-            n=scanner.nextInt();
-            if(n>0&&n<=10){
-                return n;
+        System.out.println("Choose the diffculty (easy/medium/hard): ");
+        String diffculty=sc.next();
+        int user_score;
+        int computer_score;
+        if(user_batting_first){
+            System.out.println("User Batting firsr:")
+            user_score=PlayerBatting(diffculty);
+            computer_score=PlayerBatting(diffculty);
+            if(computer_score>user_score){
+                System.out.println("Computer has won the match , computer chased the users targer");
+            }
+            else if(computer_score<user_score){
+                System.out.println("User has won the match,Computer failed to chased down the target.");
             }
             else{
-                System.out.println("Please enter a vaild number between 1 to 10");
+                System.out.println("Match was draw");
+            }
+        }
+        else(computer_batting_first){
+            System.out.println("Computer batting first: ");
+            computer_score=PlayerBatting(diffculty);
+            user_score=PlayerBatting(diffculty);
+            if(computer_score>user_score){
+                System.out.println("Computer has won the match , computer chased the users targer");
+            }
+            else if(computer_score<user_score){
+                System.out.println("User has won the match,Computer failed to chased down the target.");
+            }
+            else{
+                System.out.println("Match was draw");
             }
         }
     }
-    public static int getComputerchoice(List <Integer> history,String level){
-        switch(level){
-            case "easy":
-                return random.nextInt(10)+1;
-            case "medium":
-                if(random.nextInt(100)<100 && !history.isEmpty()){
-                    return history.get(history.size()-1);
-                }
-                return random.nextInt(10)+1;
-            case "hard":
-                if(!history.isEmpty()){
-                    Map<Integer,Integer> freq=new HashMap<>();
-                    for(int n:history){
-                        freq.put(n,freq.getOrDefault(n,0)+1);
-                    }
-                    int predicted=history.get(0),max_val=0;
-                    for(Map.Entry<Integer,Integer> entry:freq.entrySet()){
-                        if(entry.getValue()>max_val){
-                            max_val=entry.getValue();
-                            predicted=entry.getKey();
-                        }
-                    }
-                    return predicted;
-                }
-                return random.nextInt(10)+1;
-            default:
-                return random.nextInt(10)+1;
-        }
-    }
+
 }
